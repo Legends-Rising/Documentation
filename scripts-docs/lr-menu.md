@@ -1,28 +1,34 @@
-# Introduction
+---
+icon: ferris-wheel
+---
+
+# lr-menu
+
+## Introduction
 
 Welcome to the **lr-menu** documentation. This guide will help you understand how to create, manipulate, and destroy menus using the `lr-menu` resource. With `lr-menu`, you can build dynamic, draggable, multi-page menus that include various interactive elements such as buttons, switches, inputs, sliders, and more.
 
-## What is `lr-menu`?
+### What is `lr-menu`?
 
 `lr-menu` is a configurable menu system that makes it easy to create intuitive and user-friendly UI menus in your FiveM (GTA V mod) scripts. It provides functions to:
 
-- Initiate and register menus
-- Add and remove items dynamically
-- Handle user inputs (checkboxes, text inputs, sliders, etc.)
-- Navigate between multiple pages
-- Update, close, and destroy menus
+* Initiate and register menus
+* Add and remove items dynamically
+* Handle user inputs (checkboxes, text inputs, sliders, etc.)
+* Navigate between multiple pages
+* Update, close, and destroy menus
 
-## Prerequisites
+### Prerequisites
 
-- FiveM server environment
-- Basic knowledge of Lua
-- Familiarity with registering commands and exporting functions in resource scripts
+* FiveM server environment
+* Basic knowledge of Lua
+* Familiarity with registering commands and exporting functions in resource scripts
 
----
+***
 
-# Getting Started
+## Getting Started
 
-## Initiating the Menu Manager
+### Initiating the Menu Manager
 
 Before creating any menus, you need to initiate the `MenuManager` provided by `lr-menu`.
 
@@ -32,9 +38,9 @@ MenuManager = exports['lr-menu']:initiate()
 
 This exports call returns a `MenuManager` object that you will use to register and manipulate menus.
 
----
+***
 
-# Creating and Registering a Menu
+## Creating and Registering a Menu
 
 To create a new menu, use the `MenuManager:registerMenu()` function. This will return a `Menu` object that you can store and modify later.
 
@@ -56,21 +62,21 @@ local testMenu = MenuManager:registerMenu({
 })
 ```
 
-### Properties
+#### Properties
 
-- **header**: The main title displayed at the top of the menu.
-- **description**: A subheader or subtitle giving context or instructions.
-- **draggable**: A boolean value indicating if the menu can be clicked and dragged.
-- **canExit**: A boolean indicating if the menu can be closed by the user.
-- **items**: A table of items to display in the menu. Each item can be a button, switch, checkbox, input, etc.
+* **header**: The main title displayed at the top of the menu.
+* **description**: A subheader or subtitle giving context or instructions.
+* **draggable**: A boolean value indicating if the menu can be clicked and dragged.
+* **canExit**: A boolean indicating if the menu can be closed by the user.
+* **items**: A table of items to display in the menu. Each item can be a button, switch, checkbox, input, etc.
 
----
+***
 
-# Adding Items Dynamically
+## Adding Items Dynamically
 
 You are not limited to defining all items when registering the menu. You can add items at any time using `Menu:addItem()`.
 
-## Switch Item
+### Switch Item
 
 A switch provides a toggleable on/off state.
 
@@ -84,7 +90,7 @@ testMenu:addItem({
 end)
 ```
 
-## Small Button
+### Small Button
 
 A small button is a clickable item that can trigger a function when pressed.
 
@@ -98,7 +104,7 @@ testMenu:addItem({
 end)
 ```
 
-## Normal Button
+### Normal Button
 
 Similar to a small button, but often styled or sized differently.
 
@@ -111,7 +117,7 @@ testMenu:addItem({
 end)
 ```
 
-## HTML Content
+### HTML Content
 
 You can insert custom HTML content within the menu.
 
@@ -122,7 +128,7 @@ testMenu:addItem({
 })
 ```
 
-## Checkbox
+### Checkbox
 
 Check or uncheck a box and capture the state change.
 
@@ -135,7 +141,7 @@ testMenu:addItem({
 end)
 ```
 
-## Input Box
+### Input Box
 
 Collect user input via a text field.
 
@@ -148,7 +154,7 @@ testMenu:addItem({
 end)
 ```
 
-## Range Box
+### Range Box
 
 A numeric slider allowing selection of a value within a specified range.
 
@@ -164,7 +170,7 @@ testMenu:addItem({
 end)
 ```
 
-## Slider with Multiple Options
+### Slider with Multiple Options
 
 A slider to select from predefined options, not just numeric values.
 
@@ -181,9 +187,9 @@ testMenu:addItem({
 end)
 ```
 
----
+***
 
-# Removing Items
+## Removing Items
 
 Items can be removed by referencing their unique `id`.
 
@@ -192,9 +198,9 @@ testMenu:removeItem('button1')
 testMenu:removeItem('switch1')
 ```
 
----
+***
 
-# Navigational Arrows
+## Navigational Arrows
 
 Arrows can be added to indicate pagination or navigation between multiple screens.
 
@@ -207,9 +213,9 @@ testMenu:addArrows({
 end)
 ```
 
----
+***
 
-# Updating Items
+## Updating Items
 
 You can update an existing item’s properties without recreating it.
 
@@ -219,9 +225,9 @@ testMenu:updateItem('button1', {
 })
 ```
 
----
+***
 
-# Closing and Destroying Menus
+## Closing and Destroying Menus
 
 Close a menu while retaining its data:
 
@@ -235,9 +241,9 @@ Destroy a menu entirely, freeing its data from memory:
 testMenu:destroy()
 ```
 
----
+***
 
-# Multi-Page Menu Example
+## Multi-Page Menu Example
 
 `lr-menu` supports multiple pages within a single menu. Each page can have its own header, items, and navigation arrows. The example below creates a main menu and multiple sub-pages linked to it.
 
@@ -310,13 +316,13 @@ mainMenu:addArrows({ current = 1, total = totalPages })
 
 In this multi-page setup:
 
-- `pageFor = 'mainMenu'` links the sub-page to the main menu.
-- Arrow navigation (`addArrows()`) updates the displayed page.
-- Each page can have unique items and behaviors.
+* `pageFor = 'mainMenu'` links the sub-page to the main menu.
+* Arrow navigation (`addArrows()`) updates the displayed page.
+* Each page can have unique items and behaviors.
 
----
+***
 
-# Opening the Menu via a Command
+## Opening the Menu via a Command
 
 You can register a server/client command to open a specific menu:
 
@@ -328,16 +334,16 @@ end, false)
 
 Executing `/openmenulr` in-game will open `testMenu`.
 
----
+***
 
-# Conclusion
+## Conclusion
 
 You now have all the basics for using `lr-menu`:
 
-- Initiate and register menus
-- Add and remove items dynamically
-- Implement various UI elements (buttons, checkboxes, sliders, inputs)
-- Manage multiple pages and navigate between them
-- Update, close, and destroy menus when they’re no longer needed
+* Initiate and register menus
+* Add and remove items dynamically
+* Implement various UI elements (buttons, checkboxes, sliders, inputs)
+* Manage multiple pages and navigate between them
+* Update, close, and destroy menus when they’re no longer needed
 
 Use this guide as a reference while building more complex and interactive in-game UIs with `lr-menu`.
