@@ -10,7 +10,7 @@ Welcome to the **lr-menu** documentation. This guide will help you understand ho
 
 ### What is `lr-menu`?
 
-`lr-menu` is a configurable menu system that makes it easy to create intuitive and user-friendly UI menus in your FiveM (GTA V mod) scripts. It provides functions to:
+`lr-menu` is a configurable menu system that makes it easy to create intuitive and user-friendly UI menus in your Redm scripts. It provides functions to:
 
 * Initiate and register menus
 * Add and remove items dynamically
@@ -32,7 +32,7 @@ Welcome to the **lr-menu** documentation. This guide will help you understand ho
 
 Before creating any menus, you need to initiate the `MenuManager` provided by `lr-menu`.
 
-```lua
+```etlua
 MenuManager = exports['lr-menu']:initiate()
 ```
 
