@@ -1,6 +1,6 @@
 # Table of contents
 
-* [👋 Welcome to A Product](README.md)
+* [About Legends Rising Studio](README.md)
 
 ## Overview
 
