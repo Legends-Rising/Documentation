@@ -1,6 +1,6 @@
 # 👋 Welcome to Legends Rising Studio
 
-![Legends Rising Studio Banner](../.gitbook/assets/your-banner-image.png)
+![Legends Rising Studio Banner]([../.gitbook/assets/your-banner-image.png](https://raw.githubusercontent.com/Legends-Rising/Documentation/refs/heads/main/banner.png))
 
 {% hint style="info" %}
 **GitBook tip:** your documentation isn’t just a reference of all your features! Use it to inspire your users, showcase the value of your products, and guide them through the best ways to enhance their RedM experience.
