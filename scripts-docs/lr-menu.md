@@ -1,3 +1,4 @@
+```markdown
 ---
 icon: ferris-wheel
 ---
@@ -6,135 +7,124 @@ icon: ferris-wheel
 
 ## Introduction
 
-Welcome to the **lr-menu** documentation. This guide will help you understand how to create, manipulate, and destroy menus using the `lr-menu` resource. With `lr-menu`, you can build dynamic, draggable, multi-page menus that include various interactive elements such as buttons, switches, inputs, sliders, and more.
+**lr-menu** is a flexible and user-friendly menu system designed for RedM scripts. It simplifies the process of creating dynamic, draggable, multi-page menus with interactive elements like buttons, switches, inputs, and sliders.
 
-### What is `lr-menu`?
+### Key Features
 
-`lr-menu` is a configurable menu system that makes it easy to create intuitive and user-friendly UI menus in your Redm scripts. It provides functions to:
-
-* Initiate and register menus
-* Add and remove items dynamically
-* Handle user inputs (checkboxes, text inputs, sliders, etc.)
-* Navigate between multiple pages
-* Update, close, and destroy menus
+- **Intuitive Menus:** Easily create menus that players can drag, navigate, and interact with.
+- **Multiple Pages:** Organize content into multiple pages, helping players find what they need quickly.
+- **Dynamic Updates:** Add, remove, or update menu items on-the-fly without rebuilding the entire menu.
+- **Interactive Elements:** Incorporate checkboxes, sliders, text inputs, and more to enhance user engagement.
 
 ### Prerequisites
 
-* FiveM server environment
-* Basic knowledge of Lua
-* Familiarity with registering commands and exporting functions in resource scripts
+- A running FiveM/RedM server environment
+- Basic Lua knowledge
+- Familiarity with resource script exports and command registration
 
-***
+---
 
 ## Getting Started
 
-### Initiating the Menu Manager
+### Initialization
 
-Before creating any menus, you need to initiate the `MenuManager` provided by `lr-menu`.
+Start by initiating the `MenuManager`:
 
-```etlua
+```lua
 MenuManager = exports['lr-menu']:initiate()
 ```
 
-This exports call returns a `MenuManager` object that you will use to register and manipulate menus.
+This `MenuManager` instance lets you create and manage menus.
 
-***
+---
 
-## Creating and Registering a Menu
+## Creating a Menu
 
-To create a new menu, use the `MenuManager:registerMenu()` function. This will return a `Menu` object that you can store and modify later.
+Use `MenuManager:registerMenu()` to create a new menu:
 
 ```lua
 local testMenu = MenuManager:registerMenu({
-    header = 'Test Menu',            -- The main header/title of the menu
-    description = 'This menu is created using exports.',
-    draggable = true,                -- Allows the user to drag the menu around the screen
-    canExit = true,                  -- Whether the user can close the menu
+    header = 'Test Menu',
+    description = 'Created via exports.',
+    draggable = true,
+    canExit = true,
     items = {
         {
             label = 'Test Button',
             smallButton = true,
             effect = function()
-                print('Test Button Pressed!')
+                print('Button clicked!')
             end
         }
     }
 })
 ```
 
-#### Properties
+### Menu Properties
 
-* **header**: The main title displayed at the top of the menu.
-* **description**: A subheader or subtitle giving context or instructions.
-* **draggable**: A boolean value indicating if the menu can be clicked and dragged.
-* **canExit**: A boolean indicating if the menu can be closed by the user.
-* **items**: A table of items to display in the menu. Each item can be a button, switch, checkbox, input, etc.
+- **header:** Main title of the menu.
+- **description:** A subtitle or context message.
+- **draggable:** Allow users to move the menu around.
+- **canExit:** Enable closing the menu by the user.
+- **items:** A list of elements (buttons, switches, inputs, etc.).
 
-***
+---
 
 ## Adding Items Dynamically
 
-You are not limited to defining all items when registering the menu. You can add items at any time using `Menu:addItem()`.
+You can add new items after the menu is created:
 
 ### Switch Item
-
-A switch provides a toggleable on/off state.
 
 ```lua
 testMenu:addItem({
     id = 'switch1',
-    label = 'Test Switch',
+    label = 'Enable Feature',
     switch = true,
 }, function(data)
-    print(data.checked)  -- 'true' if on, 'false' if off
+    print('Switch state:', data.checked)
 end)
 ```
 
-### Small Button
-
-A small button is a clickable item that can trigger a function when pressed.
+### Buttons
 
 ```lua
 testMenu:addItem({
     id = 'button1',
-    label = 'Test Button',
+    label = 'Click Me',
     smallButton = true,
 }, function()
-    print('clicked')
+    print('Button was clicked!')
 end)
 ```
 
-### Normal Button
-
-Similar to a small button, but often styled or sized differently.
+For a normal-sized button:
 
 ```lua
 testMenu:addItem({
     id = 'button2',
-    label = 'Test Button',
+    label = 'Regular Button',
 }, function()
-    print('clicked')
+    print('Regular button clicked!')
 end)
 ```
 
 ### HTML Content
 
-You can insert custom HTML content within the menu.
+Embed custom HTML:
 
 ```lua
 testMenu:addItem({
     id = 'html1',
-    html = '<p>This is a paragraph</p>'
+    html = '<p>Custom HTML content</p>'
 })
 ```
 
 ### Checkbox
 
-Check or uncheck a box and capture the state change.
-
 ```lua
 testMenu:addItem({
-    label = 'Test Checkbox',
+    label = 'Enable Option',
     checked = false,
 }, function(data)
     print('Checkbox state:', data.checked)
@@ -143,207 +133,155 @@ end)
 
 ### Input Box
 
-Collect user input via a text field.
-
 ```lua
 testMenu:addItem({
-    label = 'Gang Colors Hex Code',
-    placeholder = 'Type something...',
+    label = 'Enter Text',
+    placeholder = 'Type here...',
 }, function(data)
-    print('Input value:', data.inputValue)
+    print('User input:', data.inputValue)
 end)
 ```
 
-### Range Box
-
-A numeric slider allowing selection of a value within a specified range.
+### Range Slider
 
 ```lua
 testMenu:addItem({
-    label = 'Test Range',
+    label = 'Volume',
     min = 0,
     max = 100,
     step = 1,
     value = 50,
 }, function(data)
-    print('Range value:', data.value)
+    print('Volume set to:', data.value)
 end)
 ```
 
-### Slider with Multiple Options
-
-A slider to select from predefined options, not just numeric values.
+### Multi-Option Slider
 
 ```lua
 testMenu:addItem({
-    label = 'Test Slider',
+    label = 'Choose an Option',
     items = {
-        { label = 'Option 1', data = 'option1' },
-        { label = 'Option 2', data = 'option2' },
-        { label = 'Option 3', data = 'option3' }
+        { label = 'Option A', data = 'A' },
+        { label = 'Option B', data = 'B' },
+        { label = 'Option C', data = 'C' },
     },
 }, function(data)
-    print('Selected item:', data.value)
+    print('Selected:', data.value)
 end)
 ```
 
-***
+---
 
-## Removing Items
+## Managing Items
 
-Items can be removed by referencing their unique `id`.
-
+**Remove an item:**
 ```lua
 testMenu:removeItem('button1')
-testMenu:removeItem('switch1')
 ```
 
-***
+**Update an item:**
+```lua
+testMenu:updateItem('button1', {
+    label = 'Updated Button Text',
+})
+```
 
-## Navigational Arrows
+---
 
-Arrows can be added to indicate pagination or navigation between multiple screens.
+## Navigation Between Pages
+
+Add navigation arrows for multi-page menus:
 
 ```lua
 testMenu:addArrows({
     current = 2,
-    total = 2,
-}, function(data, self)
-    print(data.currentPage)
+    total = 3,
+}, function(data)
+    print('Current page:', data.currentPage)
 end)
 ```
 
-***
+---
 
-## Updating Items
+## Multi-Page Menus
 
-You can update an existing item’s properties without recreating it.
-
-```lua
-testMenu:updateItem('button1', {
-    label = 'Updated label',
-})
-```
-
-***
-
-## Closing and Destroying Menus
-
-Close a menu while retaining its data:
-
-```lua
-testMenu:close()
-```
-
-Destroy a menu entirely, freeing its data from memory:
-
-```lua
-testMenu:destroy()
-```
-
-***
-
-## Multi-Page Menu Example
-
-`lr-menu` supports multiple pages within a single menu. Each page can have its own header, items, and navigation arrows. The example below creates a main menu and multiple sub-pages linked to it.
+You can link multiple menus as pages of a larger menu:
 
 ```lua
 local totalPages = 5
+
 local mainMenu = MenuManager:registerMenu({
     id = 'mainMenu',
-    header = 'Menu 1',
-    description = 'This menu is created using exports.',
+    header = 'Main Menu',
+    description = 'Your main access point',
     draggable = true,
     canExit = true,
     items = {
         {
-            label = 'Test Button',
+            label = 'Go to Page 2',
             effect = function()
                 page2:openMenu()
-            end
-        },
-        {
-            label = 'Test Checkbox',
-            checked = false,
-            effect = function(data)
-                print('Checkbox state:', data.checked)
-            end
-        },
-        {
-            label = 'Test Input',
-            placeholder = 'Type something...',
-            effect = function(data)
-                print('Input value:', data.inputValue)
-            end
-        },
-        {
-            label = 'Test Range',
-            min = 0,
-            max = 100,
-            step = 1,
-            value = 50,
-            effect = function(data)
-                print('Selected item:', data.value)
             end
         },
     }
 })
 
 local page2 = MenuManager:registerMenu({
-    header = 'Menu 2',
-    pageFor = 'mainMenu',    -- Links this page to mainMenu
-    description = 'Menu 2.',
+    header = 'Page 2',
+    pageFor = 'mainMenu',
+    description = 'Second Page',
     draggable = true,
     canExit = true,
     arrows = { current = 2, total = totalPages },
     items = {
         {
             id = 'switch1',
-            label = 'Test Switch',
+            label = 'Toggle Something',
             switch = true,
             effect = function(data)
-                print(data.checked)
+                print('Switch toggled:', data.checked)
             end
-        },
+        }
     }
 })
-
--- Additional pages...
--- page3, page4, page5 defined similarly with 'pageFor = "mainMenu"'
 
 mainMenu:addArrows({ current = 1, total = totalPages })
 ```
 
-In this multi-page setup:
+**Tip:**  
+- Use `pageFor = 'mainMenu'` to link pages.  
+- `addArrows()` handles pagination.
 
-* `pageFor = 'mainMenu'` links the sub-page to the main menu.
-* Arrow navigation (`addArrows()`) updates the displayed page.
-* Each page can have unique items and behaviors.
+---
 
-***
+## Opening & Closing Menus
 
-## Opening the Menu via a Command
+**Open a menu:**
+```lua
+testMenu:openMenu()
+```
 
-You can register a server/client command to open a specific menu:
+**Close a menu:**
+```lua
+testMenu:close()
+```
 
+**Destroy a menu:**
+```lua
+testMenu:destroy()
+```
+
+**Open via Command:**
 ```lua
 RegisterCommand('openmenulr', function()
     testMenu:openMenu()
 end, false)
 ```
 
-Executing `/openmenulr` in-game will open `testMenu`.
-
-***
+---
 
 ## Conclusion
 
-You now have all the basics for using `lr-menu`:
-
-* Initiate and register menus
-* Add and remove items dynamically
-* Implement various UI elements (buttons, checkboxes, sliders, inputs)
-* Manage multiple pages and navigate between them
-* Update, close, and destroy menus when they’re no longer needed
-
-Use this guide as a reference while building more complex and interactive in-game UIs with `lr-menu`.
+With **lr-menu**, you can quickly create polished, interactive menus. As you build more complex UIs, refer back to this guide for examples and best practices. Enjoy making user experiences more engaging and intuitive!
+```
